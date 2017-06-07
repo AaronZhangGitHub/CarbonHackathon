@@ -4,7 +4,7 @@ from orm import *
 
 client = boto3.client('rekognition')
 
-def load_labels(url):
+def load_labels(uid, url):
 	img_res = urlopen(url)
 	img_bytes = img_res.read()
 
@@ -19,24 +19,14 @@ def load_labels(url):
 			MinConfidence = 55
 		)
 
-	# Load the next index (check for existing)
-	next_idx = 0
-	try:
-		next_idx = Tag.select(fn.Max(Tag.tag_index)).scalar() + 1
-	except:
-		pass
+	pic = Picture.create(uid=uid)
+	pic.save()
+	pid = pic.pid
 
-	tags = []
 	for label in aws_res['Labels']:
-		existing_tags = Tag.select().where(Tag.tag_text == label['Name']).limit(1)
-		if len(existing_tags) == 0:
-			existing_tag = Tag.create(tag_text=label['Name'], percent=int(label['Confidence']), tag_index=next_idx)
-			existing_tag.save()
-			next_idx += 1
-		else:
-			existing_tag = existing_tags[0]
+		tag = Tag.create(tag_text=label['Name'], percent=int(label['Confidence']))
+		tag.save()
+		tid = tag.tid
 
-		tags.append(existing_tag)
-
-	return tags
-
+		pictag = PicTags.create(pid=pid, tid=tid)
+		pictag.save()

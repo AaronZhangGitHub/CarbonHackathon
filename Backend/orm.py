@@ -12,7 +12,6 @@ class Users(BaseModel):
 
 class Tag(BaseModel):
 	tid = PrimaryKeyField()
-	tag_index = IntegerField()
 	tag_text = CharField()
 	percent = IntegerField()
 
