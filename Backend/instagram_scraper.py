@@ -37,11 +37,4 @@ def scrape_insta(username):
 		i += 1
 
 	return img_array
-
-def main(argv):
-	image_links = scrape_insta(argv[1])
-	#
-
-if __name__ == "__main__":
-	main(sys.argv)
 	
