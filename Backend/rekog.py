@@ -14,6 +14,7 @@ def get_accepted_tags():
 	return tags
 
 def process_tags(uid, accepted_tags, url):
+	url = url.replace('https://', 'http://')
 	img_res = urlopen(url)
 	img_bytes = img_res.read()
 
@@ -25,10 +26,10 @@ def process_tags(uid, accepted_tags, url):
 			Image = {
 				'Bytes': img_bytes
 			},
-			MinConfidence = 55
+			MinConfidence = 45
 		)
 
-	pic = Picture.create(uid=uid)
+	pic = Picture.create(uid=uid,url=url)
 	pic.save()
 	pid = pic.pid
 
