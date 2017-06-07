@@ -1,2 +1,4 @@
 peewee
 PyMySQL
+boto3
+awscli

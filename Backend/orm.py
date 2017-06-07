@@ -1,6 +1,6 @@
 from peewee import *
 
-password = raw_input("Database password: ")
+password = input("Database password: ")
 db = MySQLDatabase('carbondb', host='carboncoderhackathon.caqu9lasjuwn.us-east-1.rds.amazonaws.com', user='zhangster', passwd=password)
 
 class BaseModel(Model):
