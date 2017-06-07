@@ -1,10 +1,19 @@
 import boto3
 from urllib.request import urlopen
 from orm import *
+import csv
 
 client = boto3.client('rekognition')
 
-def load_labels(uid, url):
+def get_accepted_tags():
+	tags = dict()
+	with open('tags.txt', 'r') as file:
+		reader = csv.reader(file)
+		for row in reader:
+			tags[row[0]] = True
+	return tags
+
+def process_tags(uid, accepted_tags, url):
 	img_res = urlopen(url)
 	img_bytes = img_res.read()
 
@@ -24,9 +33,14 @@ def load_labels(uid, url):
 	pid = pic.pid
 
 	for label in aws_res['Labels']:
-		tag = Tag.create(tag_text=label['Name'], percent=int(label['Confidence']))
-		tag.save()
-		tid = tag.tid
+		name = label['Name']
+		percent = int(label['Confidence'])
 
-		pictag = PicTags.create(pid=pid, tid=tid)
+		if (not name in accepted_tags):
+			continue
+
+		tag = Tag.create(tag_text=name, percent=percent)
+		tag.save()
+
+		pictag = PicTags.create(pid=pid, tid=tag.tid)
 		pictag.save()
