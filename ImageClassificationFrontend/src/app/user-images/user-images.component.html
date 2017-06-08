@@ -1,3 +1,7 @@
-<p>
-  user-images works!
-</p>
+<div *ngFor="let details of userDetails | async">
+	<p><img [src]="details.url"></p>
+
+	<span *ngFor="let tag of details.tags">
+		{{ tag[0] }}&nbsp;
+	</span>
+</div>
