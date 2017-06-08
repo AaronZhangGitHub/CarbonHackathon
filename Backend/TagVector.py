@@ -1,5 +1,6 @@
 import numpy as np
 import os
+from orm import *
 #tagVector1 = np.array([99, 72, 41, 98])
 #tagVector2 = np.array([31, 44, 41, 99])
 
@@ -8,6 +9,11 @@ def main():
 	#v.computeVector()
 	#print(v.getVector())
 	print(len(v.createVectorTags()))
+
+def get_tags(uid):
+	pictures = Picture.select().where(Picture.uid == uid)
+	for picture in pictures:
+		tags = PicTags.select().where(PicTags.pid == picture.pid).join(Tag)
 
 class Vector:
 	_userVector = None
