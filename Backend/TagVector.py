@@ -5,9 +5,13 @@ import csv
 
 class GenerateUserVector:
 	def getVector(self, uid):
+		print("Get vector called ")
 		v = MyVector(uid)
+		print("Vector initialized")
 		v.createVectorTags()
+		print("Vector tags created")
 		v.createVectorTagOccurenceList()
+		print("Vector to be returned")
 		return v
 
 class MyVector:
@@ -32,13 +36,22 @@ class MyVector:
 				self._tagVector.append(row[0])
 
 	def createVectorTagOccurenceList(self):
+		print("vector tag occurence lst being created")
 		for tag in self._tagVector:
+			print(tag)
 			tagSum = self.getTagSum(tag)
+			print("tag sum retrieved")
 			tagIndex = self._tagVector.index(tag)
+			print("tag index created")
 			self._tagOccurenceVector.insert(tagIndex, tagSum)
 
 	def getTagSum(self, tag_text):
 		tagSum = 0
-		for tag in Tag.select().join(PicTags).join(Picture).where(Tag.tag_text == tag_text).where(Picture.uid == self._uid):
+		print(tag_text)
+		query = Tag.select().join(PicTags).join(Picture).where(Tag.tag_text == tag_text).where(Picture.uid == self._uid)
+		print(query)
+		for tag in query:
+			print("retrieving from db")
 			tagSum += tag.percent
+		print("sum")
 		return tagSum
