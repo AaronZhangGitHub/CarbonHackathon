@@ -1,6 +1,6 @@
 from TagVector import *
 from sklearn import svm
-from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.metrics.pairwise import euclidean_distances
 from sklearn.decomposition import PCA
 from sklearn import manifold
 import numpy as np
@@ -21,24 +21,25 @@ def gen_plot(handles, colors):
 		vs.append(v)
 
 	x = np.matrix(vs).reshape(len(uids),-1).astype(np.float64)
-	plot(x, colors) # Plot based on cosine similarity
+	pos = transform_matrix(x) # Plot based on cosine similarity
+	plot(pos, colors)
 
-def plot(x, colors):
-	z = cosine_similarity(x)
+def transform_matrix(x):
+	z = euclidean_distances(x)
 
-	normInvert = np.vectorize(lambda x: 1-x)
-	z = normInvert(z)
+	# normInvert = np.vectorize(lambda x: 1-x)
+	# z = normInvert(z)
 
-	mds = manifold.MDS(n_components=3, max_iter=3000, eps=1e-9, dissimilarity="precomputed")
+	mds = manifold.MDS(n_components=3, metric=True, dissimilarity="precomputed")
 	pos = mds.fit(z).embedding_
-	clf = PCA(n_components=3)
-	pos - clf.fit_transform(pos)
 
+	clf = PCA(n_components=3)
+	return clf.fit_transform(pos)
+
+def plot(pos, colors):
 	fig = plt.figure(1)
 	ax = Axes3D(fig)
-
-	ax.scatter(pos[:,0], pos[:,1], pos[:,2], s=100, c=colors[0:len(x)])
-
+	ax.scatter(pos[:,0], pos[:,1], pos[:,2], s=100, c=colors)
 	plt.show()
 
 gen_plot([ 'greerglenn', 'therock', 'brandt.io', 'sdotcurry', 'kingjames' ],
