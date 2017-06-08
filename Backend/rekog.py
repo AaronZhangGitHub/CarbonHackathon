@@ -13,8 +13,8 @@ def get_accepted_tags():
 			tags[row[0]] = True
 	return tags
 
-def process_tags(uid, accepted_tags, url):
-	url = url.replace('https://', 'http://')
+def process_tags(uid, accepted_tags, url_tuple):
+	url = url_tuple[0].replace('https://', 'http://')
 	img_res = urlopen(url)
 	img_bytes = img_res.read()
 
