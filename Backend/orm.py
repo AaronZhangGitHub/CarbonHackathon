@@ -16,6 +16,10 @@ class Tag(BaseModel):
 	tag_text = CharField()
 	percent = IntegerField()
 
+	@staticmethod
+	def get_occurances_for(uid):
+		return Tag.select().join(PicTags).join(Picture).where(Picture.uid == uid).group_by(Tag.tag_text).select(Tag.tag_text, fn.Sum(Tag.percent).alias('percent')).order_by('percent').tuples()
+
 class Picture(BaseModel):
 	pid = PrimaryKeyField()
 	uid = ForeignKeyField(IGUsers)
