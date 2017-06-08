@@ -15,6 +15,13 @@ class IGUsers(BaseModel):
 	def get_by_handle(handle):
 		return IGUsers.select().where(IGUsers.handle == handle).order_by(IGUsers.uid.desc()).get()
 
+	@staticmethod
+	def get_distinct_handles():
+		join_query = IGUsers.select(IGUsers.handle, IGUsers.uid)
+		join_query = join_query.alias('jq')
+		query = IGUsers.select().join(join_query, on=(IGUsers.handle == join_query.c.handle)).group_by(IGUsers.handle).select(IGUsers.handle, fn.Max(join_query.c.uid).alias('uid')).order_by(IGUsers.handle)
+		return query
+
 class Tag(BaseModel):
 	tid = PrimaryKeyField()
 	tag_text = CharField()
@@ -23,7 +30,6 @@ class Tag(BaseModel):
 	@staticmethod
 	def get_occurances_for(uid):
 		query = Tag.select().join(PicTags).join(Picture).where(Picture.uid == uid).group_by(Tag.tag_text).select(Tag.tag_text, fn.Sum(Tag.percent).alias('spercent')).order_by(SQL('spercent').desc())
-		print(query)
 		return [ (x[0], int(x[1])) for x in query.tuples() ]
 
 class Picture(BaseModel):
@@ -46,6 +52,12 @@ class PicTags(BaseModel):
 	pid = ForeignKeyField(Picture)
 	tid = ForeignKeyField(Tag)
 
-db.connect()
+def before_request_handler():
+    db.connect()
 
-db.create_tables([ IGUsers, Tag, Picture, PicTags ], safe=True)
+def after_request_handler():
+    db.close()
+
+# db.connect()
+
+# db.create_tables([ IGUsers, Tag, Picture, PicTags ], safe=True)
