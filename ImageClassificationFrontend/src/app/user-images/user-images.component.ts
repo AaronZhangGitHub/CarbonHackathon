@@ -8,10 +8,11 @@ import { Component, OnInit, Input } from '@angular/core';
 export class UserImagesComponent implements OnInit {
 
 	@Input
+	
 
-  constructor() { }
+	constructor() { }
 
-  ngOnInit() {
-  }
+	ngOnInit() {
+	}
 
 }

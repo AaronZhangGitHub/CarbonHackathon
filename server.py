@@ -21,20 +21,28 @@ class User(object):
 	@cherrypy.expose
 	@cherrypy.tools.json_out()
 	def index(self, uid=None):
-		if uid == None:
-			return [ x for x in IGUsers.select().dicts() ]
-		else:
-			return [ x for x in IGUsers.select().where(IGUsers.uid == uid).limit(1).dicts() ]
+		try:
+			before_request_handler()
+			if uid == None:
+				return [ x for x in IGUsers.get_distinct_handles().dicts() ]
+			else:
+				return [ x for x in IGUsers.get_distinct_handles().where(IGUsers.uid == uid).limit(1).dicts() ]
+		finally:
+			after_request_handler()
 
 @cherrypy.popargs('action')
 class UserTags(object):
 	@cherrypy.expose
 	@cherrypy.tools.json_out()
 	def index(self, uid, action=None):
-		if action == 'details':
-			return Picture.get_with_tags(int(uid))
-		else:
-			return Tag.get_occurances_for(int(uid))
+		try:
+			before_request_handler()
+			if action == 'details':
+				return Picture.get_with_tags(int(uid))
+			else:
+				return Tag.get_occurances_for(int(uid))
+		finally:
+			after_request_handler()
 
 
 if __name__ == '__main__':
