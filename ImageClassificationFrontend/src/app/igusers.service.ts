@@ -18,7 +18,19 @@ export class IGUsersService {
   }
 
   processUser(handle: string) {
-  	
+  	// TODO
+  }
+
+  getAllTags() {
+    return this.http.get(`/api/data/tags`).map(res => res.json());
+  }
+
+  getTagSumValues() {
+    return this.http.get(`/api/data/sumvalues`).map(res => res.json());
+  }
+
+  getTagMeanValues() {
+    return this.http.get(`/api/data/meanvalues`).map(res => res.json());
   }
 
 }

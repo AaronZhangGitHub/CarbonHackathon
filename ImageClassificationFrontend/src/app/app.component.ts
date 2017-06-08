@@ -14,10 +14,17 @@ export class AppComponent implements OnInit {
 	users: Observable<IGUsers[]>;
 	selectedUser: IGUsers;
 
+	tags: Observable<string[]>;
+	sums: Observable<number[]>;
+	means: Observable<number[]>;
+
 	constructor (private igusersService: IGUsersService) { }
   
 	ngOnInit() {
 		this.users = this.igusersService.getUsers();
+		this.tags = this.igusersService.getAllTags();
+		this.sums = this.igusersService.getTagSumValues();
+		this.means = this.igusersService.getTagMeanValues();
 	}
 
 	select(user: IGUsers) {

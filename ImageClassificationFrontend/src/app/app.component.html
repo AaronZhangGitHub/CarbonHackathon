@@ -19,6 +19,26 @@
     </div>
   </div>
   -->
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Data Aggregate</h2>
+    </div>
+    <div class="panel-body">
+      <h4>Total</h4>
+      <canvas baseChart
+            [data]="sums | async"
+            [labels]="tags | async"
+            [legend]="false"
+            [chartType]="'bar'"></canvas>
+
+      <h4>Average</h4>
+      <canvas baseChart
+            [data]="means | async"
+            [labels]="tags | async"
+            [legend]="false"
+            [chartType]="'polarArea'"></canvas>
+    </div>
+  </div>
 
   <div class="panel panel-default">
     <div class="panel-heading">

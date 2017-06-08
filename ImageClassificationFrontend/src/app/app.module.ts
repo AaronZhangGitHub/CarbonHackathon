@@ -8,6 +8,8 @@ import { AppComponent } from './app.component';
 import { IGUsersService } from "./igusers.service";
 import { UserImagesComponent } from './user-images/user-images.component';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -16,7 +18,8 @@ import { UserImagesComponent } from './user-images/user-images.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ChartsModule
   ],
   providers: [
   	IGUsersService
