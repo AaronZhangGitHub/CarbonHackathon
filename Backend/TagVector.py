@@ -1,30 +1,27 @@
 import numpy as np
 import os
 from orm import *
-#tagVector1 = np.array([99, 72, 41, 98])
-#tagVector2 = np.array([31, 44, 41, 99])
 
-def main():
-	v = Vector()
-	#v.computeVector()
-	#print(v.getVector())
-	print(len(v.createVectorTags()))
-
-def get_tags(uid):
-	pictures = Picture.select().where(Picture.uid == uid)
-	for picture in pictures:
-		tags = PicTags.select().where(PicTags.pid == picture.pid).join(Tag)
+def generateVectorForUser(uid):
+	v = Vector(uid)
+	v.createVectorTags()
+	v.createVectorTagOccurenceList()
+	print(v.getTagList())
+	print(v.getTagOccurenceVector())
+	return v
 
 class Vector:
-	_userVector = None
-	_tagVector = None
-	#Each vector represents a user
-	def getVector(self):
-		return 
-	def computeVector(self):
-		self._userVector = np.array([99, 72, 41, 98])
-	def getVector(self):
-		return self._userVector
+	_tagVector = None #List of Tag namers
+	_tagOccurenceVector = [] #List of Tag Percentage Sums
+	_uid = None
+	def __init__(self, userID):
+		self._uid = userID
+	def getTagList(self):
+		#returns list of tags
+		return self._tagVector
+	def getTagOccurenceVector(self):
+		#Returns list of tag percentage sums
+		return self._tagOccurenceVector
 	def createVectorTags(self):
 		script_dir = os.path.dirname(__file__) 
 		rel_path = "tags.txt"
@@ -33,5 +30,14 @@ class Vector:
 			self._tagVector = list(f)
 		with open(abs_file_path) as f:
 			self._tagVector = [line.rstrip('\n') for line in f]
-		return self._tagVector
-main()
+	def createVectorTagOccurenceList(self):
+		for tag in self._tagVector:
+			tagSum = self.getTagSum(tag, self._uid)
+			tagIndex = self._tagVector.index(tag)
+			self._tagOccurenceVector.insert(tagIndex, tagSum)
+	def getTagSum(self, tag, uid):
+		tagSum = 0
+		for tag in Tag.select().join(PicTags).join(Picture).where(Picture.uid == uid).where(Tag.tag_text == tag):
+			tagSum += tag.percent
+		return tagSum
+generateVectorForUser(3)
