@@ -40,4 +40,5 @@ class Vector:
 		for tag in Tag.select().join(PicTags).join(Picture).where(Picture.uid == uid).where(Tag.tag_text == tag):
 			tagSum += tag.percent
 		return tagSum
+
 generateVectorForUser(3)
