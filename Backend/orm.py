@@ -11,6 +11,10 @@ class IGUsers(BaseModel):
 	uid = PrimaryKeyField()
 	handle = CharField()
 
+	@staticmethod
+	def get_by_handle(handle):
+		return IGUsers.select().where(IGUsers.handle == handle).order_by(IGUsers.uid.desc()).get()
+
 class Tag(BaseModel):
 	tid = PrimaryKeyField()
 	tag_text = CharField()
@@ -45,5 +49,3 @@ class PicTags(BaseModel):
 db.connect()
 
 db.create_tables([ IGUsers, Tag, Picture, PicTags ], safe=True)
-
-# TODO do stuff

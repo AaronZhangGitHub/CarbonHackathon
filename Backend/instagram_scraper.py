@@ -2,6 +2,7 @@ import httplib2
 import urllib
 import json 
 import sys
+import csv
 
 def scrape_location_data(username, img_code):
 	h = httplib2.Http()
