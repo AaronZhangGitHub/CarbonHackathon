@@ -24,6 +24,10 @@ export class AppComponent implements OnInit {
 		this.selectedUser = user;
 	}
 
+	unselect() {
+		this.selectedUser = null;
+	}
+
 	search() {
 		// TODO
 	}

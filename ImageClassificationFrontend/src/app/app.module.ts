@@ -6,10 +6,12 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 
 import { IGUsersService } from "./igusers.service";
+import { UserImagesComponent } from './user-images/user-images.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    UserImagesComponent
   ],
   imports: [
     BrowserModule,

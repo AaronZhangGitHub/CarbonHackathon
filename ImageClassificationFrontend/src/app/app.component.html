@@ -14,7 +14,7 @@
         <label for="username">Instagram Profile:</label>
         <input type="text" class="form-control" id="username" [(ngModel)]="searchUserName" required>
       </div>
-      <button class="btn btn-primary" (click)="search()">Run!</button>
+      <button class="btn btn-primary" (click)="search()">Search</button>
     </div>
   </div>
 
@@ -33,5 +33,12 @@
 </div>
 
 <div class="container" *ngIf="selectedUser">
-  {{ selectedUser.handle }}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>{{ selectedUser.handle }}</h2>
+      <a class="pull-right" (click)="unselect()">Back</a>
+    </div>
+    <div class="panel-body">
+      <user-images [user]="selectedUser"></user-images>
+    </div>
 </div>
