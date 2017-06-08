@@ -10,10 +10,19 @@ from sklearn.cluster import KMeans
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+
 def gen_plot(handles, colors):
 	# Convert handles to user ids
+	
 	uids = [ user.uid for user in [ IGUsers.get_by_handle(handle) for handle in handles ]]
-
+	try:
+		before_request_handler()
+		if uid == None:
+			return [ x for x in IGUsers.get_distinct_handles().dicts() ]
+		else:
+			return [ x for x in IGUsers.get_distinct_handles().where(IGUsers.uid == uid).limit(1).dicts() ]
+	finally:
+			after_request_handler()
 	# Get vectors for each user and convert to matrix
 	vg = GenerateUserVector()
 	vs = []
