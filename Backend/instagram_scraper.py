@@ -18,7 +18,7 @@ def scrape_location_data(username, img_code):
 	else:
 		return None
 
-def scrape_insta(username):
+def scrape_insta(username, count=20):
 	h = httplib2.Http()
 	resp, content = h.request("http://instagram.com/%s" % username)
 	beg_index = content.find(b"window._sharedData = ")
@@ -31,7 +31,7 @@ def scrape_insta(username):
 	# Iterate over all of the user's photos
 	img_array = []
 	i = 0
-	while len(img_array) < 10:
+	while len(img_array) < count:
 		media = insta_array['entry_data']['ProfilePage'][0]['user']['media']['nodes'][i]
 
 		if media['is_video']: # Don't include videos
