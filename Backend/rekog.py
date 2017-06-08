@@ -26,7 +26,7 @@ def process_tags(uid, accepted_tags, url_tuple):
 			Image = {
 				'Bytes': img_bytes
 			},
-			MinConfidence = 45
+			MinConfidence = 55
 		)
 
 	pic = Picture.create(uid=uid,url=url)
