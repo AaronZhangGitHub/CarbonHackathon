@@ -9,6 +9,8 @@ import { Observable } from "rxjs";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+	searchUserName: string;
+
 	users: Observable<IGUsers[]>;
 	selectedUser: IGUsers;
 
@@ -20,6 +22,10 @@ export class AppComponent implements OnInit {
 
 	select(user: IGUsers) {
 		this.selectedUser = user;
+	}
+
+	search() {
+		// TODO
 	}
 
 }

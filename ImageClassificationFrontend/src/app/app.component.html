@@ -1,9 +1,37 @@
-<div class="list-group" *ngIf="!selectedUser">
-  <a (click)="select(user)" *ngFor="let user of users | async">
-    {{ user.handle }}
-  </a>
+<div class="container">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h1><b>Image Classificaiton</b></h1></div>
+  </div>
 </div>
 
-<div *ngIf="selectedUser">
+<div class="container" *ngIf="!selectedUser">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Search for a new User</h2>
+    </div>
+    <div class="panel-body">
+      <div class="form-group">
+        <label for="username">Instagram Profile:</label>
+        <input type="text" class="form-control" id="username" [(ngModel)]="searchUserName" required>
+      </div>
+      <button class="btn btn-primary" (click)="search()">Run!</button>
+    </div>
+  </div>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2>Select a Pre-Processed User</h2>
+    </div>
+    <div class="panel-body">
+      <div class="list-group">
+        <a class="list-group-item" (click)="select(user)" *ngFor="let user of users | async">
+          {{ user.handle }}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="selectedUser">
   {{ selectedUser.handle }}
 </div>

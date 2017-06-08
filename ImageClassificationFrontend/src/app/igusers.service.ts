@@ -10,9 +10,9 @@ export class IGUsersService {
   constructor (private http: Http) {}
 
   getUsers(): Observable<IGUsers[]> {
-  	return this.http.get(`/api/users/`).map(res => res.json().data || {});
+  	return this.http.get(`/api/users/`).map(res => res.json() || {});
   }
 
-  
+
 
 }
