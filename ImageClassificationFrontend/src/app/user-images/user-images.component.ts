@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { IGUsersService } from "../igusers.service";
+import { IGUsers } from '../../models/igusers'
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'app-user-images',
@@ -7,12 +10,15 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class UserImagesComponent implements OnInit {
 
-	@Input
-	
+	@Input() user: IGUsers;
+	userDetails: Observable<any>;
 
-	constructor() { }
+	constructor(private igusersService: IGUsersService) { }
 
 	ngOnInit() {
+		this.userDetails = this.igusersService.getDetails(this.user);
+
+		this.userDetails.subscribe(x => console.log(x));
 	}
 
 }

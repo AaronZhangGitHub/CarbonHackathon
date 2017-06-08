@@ -35,10 +35,10 @@
 <div class="container" *ngIf="selectedUser">
   <div class="panel panel-default">
     <div class="panel-heading">
+      <a (click)="unselect()">Back</a>
       <h2>{{ selectedUser.handle }}</h2>
-      <a class="pull-right" (click)="unselect()">Back</a>
     </div>
     <div class="panel-body">
-      <user-images [user]="selectedUser"></user-images>
+      <app-user-images [user]="selectedUser"></app-user-images>
     </div>
 </div>
