@@ -18,7 +18,7 @@ x = np.matrix([ [1, 4, 9], [5, 6, 7], [ -1, 5, 10 ] ]).reshape(3,-1)
 def plot(x):
 	z = cosine_similarity(x)
 
-	normInvert = np.vectorize(lambda (x): 1-x)
+	normInvert = np.vectorize(lambda x: 1-x)
 	z = normInvert(z)
 
 	mds = manifold.MDS(n_components=3, max_iter=3000, eps=1e-9, dissimilarity="precomputed")
