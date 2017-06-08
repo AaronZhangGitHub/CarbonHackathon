@@ -2,13 +2,14 @@ import numpy as np
 import os
 from orm import *
 
-def generateVectorForUser(uid):
-	v = Vector(uid)
-	v.createVectorTags()
-	v.createVectorTagOccurenceList()
-	print(v.getTagList())
-	print(v.getTagOccurenceVector())
-	return v
+class GenerateUserVector:
+	def getVector(self, uid):
+		v = Vector(uid)
+		v.createVectorTags()
+		v.createVectorTagOccurenceList()
+		print(v.getTagList())
+		print(v.getTagOccurenceVector())
+		return v
 
 class Vector:
 	_tagVector = None #List of Tag namers
@@ -40,4 +41,3 @@ class Vector:
 		for tag in Tag.select().join(PicTags).join(Picture).where(Picture.uid == uid).where(Tag.tag_text == tag):
 			tagSum += tag.percent
 		return tagSum
-generateVectorForUser(3)
