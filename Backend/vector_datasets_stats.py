@@ -43,9 +43,14 @@ class AggregatedVectorStatistics:
 		return self._sumOfTagsList
 	def getNumberOfUsers(self):
 		return len(self._tagOccurenceVectorList)
-	def writeToFile(self):
+	def writeToFileTagOccurenceVector(self):
 		open('tagstatinfo.txt', 'w').close()
-		fileToWrite = open('tagstatinfo.txt', 'w')
+		fileToWrite = open('TagOccurenceVectorList.txt', 'w')
+		for vector in self._tagOccurenceVectorList:
+			fileToWrite.write("%s\n" % vector)
+	def writeToFileMeanValues(self):
+		open('tagstatinfo.txt', 'w').close()
+		fileToWrite = open('TagOccurenceVectorList.txt', 'w')
 		for vector in self._tagOccurenceVectorList:
 			fileToWrite.write("%s\n" % vector)
 
