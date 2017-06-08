@@ -26,11 +26,16 @@ class User(object):
 		else:
 			return [ x for x in IGUsers.select().where(IGUsers.uid == uid).limit(1).dicts() ]
 
+@cherrypy.popargs('action')
 class UserTags(object):
 	@cherrypy.expose
 	@cherrypy.tools.json_out()
-	def index(self, uid):
-		return [ (x[0], int(x[1])) for x in Tag.get_occurances_for(int(uid)) ]
+	def index(self, uid, action=None):
+		if action == 'details':
+			return Picture.get_with_tags(int(uid))
+		else:
+			return Tag.get_occurances_for(int(uid))
+
 
 if __name__ == '__main__':
    cherrypy.quickstart(Root(), '/', 'server.conf')

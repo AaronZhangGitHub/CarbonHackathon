@@ -4,14 +4,14 @@ from orm import *
 
 class GenerateUserVector:
 	def getVector(self, uid):
-		v = Vector(uid)
+		v = MyVector(uid)
 		v.createVectorTags()
 		v.createVectorTagOccurenceList()
 		print(v.getTagList())
 		print(v.getTagOccurenceVector())
 		return v
 
-class Vector:
+class MyVector:
 	_tagVector = None #List of Tag namers
 	_tagOccurenceVector = [] #List of Tag Percentage Sums
 	_uid = None

@@ -8,7 +8,7 @@ def main():
 	user = IGUsers.create(handle="therock")
 	user.save()
 
-	urls = instagram_scraper.scrape_insta(user.handle, 20)
+	urls = instagram_scraper.scrape_insta(user.handle, 15)
 	for url in urls:
 		rekog.process_tags(user.uid, accepted_tags, url)
 
