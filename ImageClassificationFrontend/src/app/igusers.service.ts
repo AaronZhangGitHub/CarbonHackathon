@@ -17,4 +17,8 @@ export class IGUsersService {
   	return this.http.get(`/api/users/${user.uid}/tags/details/`).map(res => res.json());
   }
 
+  processUser(handle: string) {
+  	
+  }
+
 }

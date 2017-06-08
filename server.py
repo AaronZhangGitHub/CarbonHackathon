@@ -1,5 +1,7 @@
 import cherrypy
 from Backend.orm import *
+from threading import Thread
+from build_for import build_for
 
 class Root(object):
 	def __init__(self):
@@ -12,6 +14,24 @@ class Root(object):
 class Api(object):
 	def __init__(self):
 		self.users = User()
+		self.processor = Processor()
+
+@cherrypy.popargs('handle')
+class Processor(object):
+	@cherrypy.expose
+	@cherrypy.tools.json_out()
+	def index(self, handle):
+		thread = Thread(target = threaded_build_for, args = (handle, ))
+		thread.start()
+	index._cp_config = {'response.stream': True}
+
+# For running build asynccher
+def threaded_build_for(handle):
+	try:
+		before_request_handler()
+		build_for(handle)
+	finally:
+		after_request_handler()
 
 @cherrypy.popargs('uid')
 class User(object):

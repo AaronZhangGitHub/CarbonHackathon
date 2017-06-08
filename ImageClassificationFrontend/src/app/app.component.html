@@ -5,6 +5,7 @@
 </div>
 
 <div class="container" *ngIf="!selectedUser">
+  <!--
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2>Search for a new User</h2>
@@ -14,9 +15,10 @@
         <label for="username">Instagram Profile:</label>
         <input type="text" class="form-control" id="username" [(ngModel)]="searchUserName" required>
       </div>
-      <button class="btn btn-primary" (click)="search()">Search</button>
+      <button class="btn btn-primary" (click)="search()" [disabled]="!searchUserName">Search</button>
     </div>
   </div>
+  -->
 
   <div class="panel panel-default">
     <div class="panel-heading">

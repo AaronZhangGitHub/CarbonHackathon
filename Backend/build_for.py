@@ -12,8 +12,3 @@ def build_for(handle):
 	urls = instagram_scraper.scrape_insta(user.handle, 15)
 	for url in urls:
 		rekog.process_tags(user.uid, accepted_tags, url)
-
-if len(sys.argv) > 0:
-	build_for(sys.argv[1])
-else:
-	print("Missing handle!")

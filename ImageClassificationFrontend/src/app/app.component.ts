@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
 	}
 
 	search() {
-		// TODO
+		this.igusersService.processUser(this.searchUserName);
 	}
 
 }
