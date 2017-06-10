@@ -1,7 +1,10 @@
 from peewee import *
 
-password = "abcd1234" # input("Database password: ")
-db = MySQLDatabase('carbondb', host='carboncoderhackathon.caqu9lasjuwn.us-east-1.rds.amazonaws.com', user='zhangster', passwd=password)
+my_db = input("Database name: ")
+my_host = input("Database hostname: ")
+my_user = input("Database username: ")
+my_password = input("Database password: ")
+db = MySQLDatabase(my_db, host=my_host, user=my_user, passwd=my_password)
 
 class BaseModel(Model):
 	class Meta:
